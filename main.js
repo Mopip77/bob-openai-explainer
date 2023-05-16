@@ -11,24 +11,43 @@
  * 服务商语言代码转 Bob 语言代码: var standardLang = langMapReverse.get('xxx');
  */
 
-var items = [
-    ['auto', 'xxx'],
-    ['zh-Hans', 'xxx'],
-    ['zh-Hant', 'xxx'],
-    ['en', 'xxx'],
-];
-
-var langMap = new Map(items);
-var langMapReverse = new Map(items.map(([standardLang, lang]) => [lang, standardLang]));
 
 function supportLanguages() {
-    return items.map(([standardLang, lang]) => standardLang);
+    return ['auto', 'zh-Hans', 'zh-Hant', 'en'];
 }
 
 function translate(query, completion) {
-    // 翻译成功
-    // completion({'result': result});
-    
-    // 翻译失败
-    // completion({'error': error});    
+
+    var header = {
+        'Authorization': 'Bearer ' + $option.openaiApiKey,
+        'Content-Type': 'application/json'
+    }
+
+    var body = {
+        'model': $option.model,
+        'messages': [
+            {
+                'role': 'system',
+                'content': `${$option.prompt}\n\n${query.text}`
+            }
+        ]
+    }
+
+    $http.request({
+        method: "POST",
+        url: 'https://api.openai.com/v1/chat/completions',
+        header,
+        body,
+        handler: function(response) {
+            $log.error(`response: ${JSON.stringify(response)}`)
+
+            var result = response['data']['choices'][0]['message']['content']
+
+            completion({
+                'result': {
+                    'toParagraphs': [result]
+                }
+            })
+        }
+    })
 }

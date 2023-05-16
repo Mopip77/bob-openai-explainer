@@ -1,13 +1,37 @@
 {
-    "identifier": "请修改",
+    "identifier": "bob.openai.explainer",
     "version": "0.1.0",
     "category": "translate",
-    "name": "请修改",
+    "name": "ChatGPT解释",
     "summary": "",
     "icon": "",
     "author": "",
     "homepage": "",
     "appcast": "",
     "minBobVersion": "0.5.0",
-    "options": []
+    "options": [
+        {
+            "identifier": "openaiApiKey",
+            "type": "text",
+            "title": "OpenAI API Key"
+        },
+        {
+            "identifier": "prompt",
+            "type": "text",
+            "title": "Prompt",
+            "defaultValue": "简明扼要地解释"
+        },
+        {
+            "identifier": "model",
+            "type": "menu",
+            "defaultValue": "gpt-3.5-turbo",
+            "title": "Model",
+            "menuValues": [
+                {
+                    "title": "gpt-3.5-turbo",
+                    "value": "gpt-3.5-turbo"
+                }
+            ]
+        }
+    ]
 }
