@@ -8,7 +8,7 @@
 
 ## Install
 
-在 [Release](/releases) 页面下载并安装
+在 [Release](https://github.com/Mopip77/bob-openai-explainer/releases) 页面下载并安装
 
 ## Usage
 
