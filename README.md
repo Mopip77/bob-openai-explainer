@@ -6,4 +6,4 @@
 
 建议 `隐藏并钉到语言切换栏`，按需使用
 
-![](static/example.png)
+![](static/example.gif)
