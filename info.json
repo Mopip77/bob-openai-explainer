@@ -1,12 +1,12 @@
 {
     "identifier": "bob.openai.explainer",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "category": "translate",
     "name": "ChatGPT解释",
     "summary": "",
     "icon": "",
-    "author": "",
-    "homepage": "",
+    "author": "Mopip77",
+    "homepage": "https://github.com/Mopip77",
     "appcast": "",
     "minBobVersion": "0.5.0",
     "options": [
