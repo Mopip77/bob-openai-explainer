@@ -1,9 +1,23 @@
-## bob-openai-explainer
+<p align="center"><img width="100" src="icon.png"></img></p>
 
-使用ChatGPT快速对所选文本进行解释，内置prompt为 - `简明扼要地解释` （可自行定义）
 
-### Usage
+
+# bob-openai-explainer
+
+借用 `bob` 的展示能力，使用 `ChatGPT` 快速对所选文本进行解释说明
+
+## Install
+
+在 [Release](/releases) 页面下载并安装
+
+## Usage
 
 建议 `隐藏并钉到语言切换栏`，按需使用
 
-![](static/example.gif)
+> <img width="500" src="static/example.gif"></img>
+
+## Configuration
+
+| key | defaultValue |
+| --- | ----- |
+| prompt | 简明扼要地解释 |
