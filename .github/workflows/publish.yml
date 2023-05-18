@@ -22,5 +22,6 @@ jobs:
         name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
             bob-openai-explainer.bobplugin
