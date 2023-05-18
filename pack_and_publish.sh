@@ -10,6 +10,8 @@ fi
 sed -i "s/\"version\": \".*\"/\"version\": \"$version\"/" info.json
 zip -r bob-openai-explainer.bobplugin info.json main.js icon.png
 
+set -x
+
 min_bob_version=$(sed -nr "s/^.*minBobVersion\": \"(.*?)\",$/\1/p" info.json)
 
 sha256=$(shasum -a 256 bob-openai-explainer.bobplugin)
