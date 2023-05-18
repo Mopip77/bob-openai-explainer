@@ -19,7 +19,7 @@ sed -i '3a\
           "version": "'$version'",\
           "desc": "'$version'",\
           "sha256": "'$sha256'",\
-          "url": "https://github.com/Mopip77/bob-openai-explainer/releases/download/'$version'/bob-openai-explainer.bobplugin"\,
+          "url": "https://github.com/Mopip77/bob-openai-explainer/releases/download/'$version'/bob-openai-explainer.bobplugin",\
           "minBobVersion": "'$min_bob_version'"\
         },' appcast.json
 
