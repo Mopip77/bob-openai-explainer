@@ -24,5 +24,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: ./bob-openai-explainer.bobplugin
-          release_name: bob-openai-explainer.bobplugin
+          asset_path: ./bob-openai-explainer.bobplugin
+          asset_name: bob-openai-explainer.bobplugin
