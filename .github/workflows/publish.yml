@@ -13,6 +13,8 @@ jobs:
       - 
         name: Check out the repo
         uses: actions/checkout@v3
+      - 
+        name: Pack plugin
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"${{github.ref_name}}\"/" info.json && \
           zip bob-openai-explainer.bobplugin info.json main.js icon.png
