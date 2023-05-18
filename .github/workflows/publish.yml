@@ -19,11 +19,17 @@ jobs:
       - 
         name: Pack plugin
         run: |
-          sed -i "s/\"version\": \".*\"/\"version\": \"${{github.ref_name}}\"/" info.json && \
-          zip bob-openai-explainer.bobplugin info.json main.js icon.png
+          pack_and_publish "${{github.ref_name}}"
       - 
         name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
           files: |
             bob-openai-explainer.bobplugin
+      - 
+        name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: appcast.json
+            commit-msg: "Publish new version: ${{github.ref_name}}"
+            github-token: ${{ secrets.GITHUB_TOKEN }}
