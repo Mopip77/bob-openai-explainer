@@ -14,7 +14,7 @@ set -x
 
 min_bob_version=$(sed -nr "s/^.*minBobVersion\": \"(.*?)\",$/\1/p" info.json)
 
-sha256=$(shasum -a 256 bob-openai-explainer.bobplugin)
+sha256=$(shasum -a 256 bob-openai-explainer.bobplugin | cut -d" " -f1) 
 
 sed -i '3a\
         {\
