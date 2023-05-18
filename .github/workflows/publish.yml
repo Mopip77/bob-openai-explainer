@@ -19,7 +19,7 @@ jobs:
       - 
         name: Pack plugin
         run: |
-          pack_and_publish "${{github.ref_name}}"
+          ./pack_and_publish "${{github.ref_name}}"
       - 
         name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
