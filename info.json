@@ -6,8 +6,8 @@
     "summary": "",
     "icon": "",
     "author": "Mopip77",
-    "homepage": "https://github.com/Mopip77",
-    "appcast": "https://github.com/Mopip77/bob-openai-explainer/raw/main/appcast.json",
+    "homepage": "https://github.com/Mopip77/bob-openai-explainer",
+    "appcast": "https://github.com/Mopip77/bob-openai-explainer/raw/master/appcast.json",
     "minBobVersion": "0.5.0",
     "options": [
         {
