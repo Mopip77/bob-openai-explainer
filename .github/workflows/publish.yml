@@ -1,0 +1,26 @@
+name: Publish plugin artifacts
+
+on:
+  push:
+    tags:
+      - \d+\.\d+\.\d+
+
+jobs:
+  pack_and_publish:
+    name: Pack And Publish
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Check out the repo
+        uses: actions/checkout@v3
+        run: |
+          sed -i "s/\"version\": \".*\"/\"version\": \"${{github.ref_name}}\"/" info.json && \
+          zip bob-openai-explainer.bobplugin info.json main.js icon.png
+      - 
+        name: Publish to GitHub Releases
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: ./bob-openai-explainer.bobplugin
+          release_name: bob-openai-explainer.bobplugin
