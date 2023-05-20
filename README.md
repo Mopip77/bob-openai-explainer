@@ -26,4 +26,4 @@
 
 - [x] 基础调用
 - [x] 支持插件自动更新 
-- [ ] 支持流式输出
+- [x] 支持流式输出，参考 <https://github.com/openai-translator/bob-plugin-openai-translator/pull/83>
