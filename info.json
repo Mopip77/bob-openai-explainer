@@ -11,6 +11,15 @@
     "minBobVersion": "1.8.0",
     "options": [
         {
+            "identifier": "endpoint",
+            "type": "text",
+            "title": "endpoint",
+            "defaultValue": "https://api.openai.com/v1",
+            "textConfig": {
+                "type": "visible"
+            }
+        },
+        {
             "identifier": "openaiApiKey",
             "type": "text",
             "title": "OpenAI API Key"
@@ -19,7 +28,10 @@
             "identifier": "prompt",
             "type": "text",
             "title": "Prompt",
-            "defaultValue": "简明扼要地解释"
+            "defaultValue": "简明扼要地解释",
+            "textConfig": {
+                "type": "visible"
+            }
         },
         {
             "identifier": "model",

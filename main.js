@@ -35,7 +35,7 @@ function translate(query, completion) {
   let targetText = '';
   $http.streamRequest({
     method: "POST",
-    url: "https://api.openai.com/v1/chat/completions",
+    url: `${$option.endpoint}/chat/completions`,
     header,
     body,
     streamHandler: function (streamData) {
