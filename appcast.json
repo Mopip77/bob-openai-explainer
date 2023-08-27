@@ -2,6 +2,13 @@
     "identifier": "bob.openai.explainer",
     "versions": [
         {
+          "version": "0.6.0",
+          "desc": "0.6.0",
+          "sha256": "7b95ffc7d78e9f777d751f0faec0fd6523b97aa33541b9cc85d5303f70b551c0",
+          "url": "https://github.com/Mopip77/bob-openai-explainer/releases/download/0.6.0/bob-openai-explainer.bobplugin",
+          "minBobVersion": "1.8.0"
+        },
+        {
           "version": "0.5.0",
           "desc": "0.5.0",
           "sha256": "d8599ead6abd509bbc406d4e65fc9fd5b3263035e73c39955197c18256b80e78",
