@@ -12,7 +12,26 @@
  */
 
 function supportLanguages() {
-  return ["auto", "zh-Hans", "zh-Hant", "en"];
+  return [
+      "auto",
+      "zh-Hans",
+      "zh-Hant",
+      "yue",
+      "wyw",
+      "pysx",
+      "en",
+      "ja",
+      "ko",
+      "fr",
+      "de",
+      "es",
+      "it",
+      "ru",
+      "pt",
+      "nl",
+      "pl",
+      "ar"
+  ];
 }
 
 function translate(query, completion) {
