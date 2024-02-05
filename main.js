@@ -75,7 +75,6 @@ function translate(query, completion) {
                     from: query.detectFrom,
                     to: query.detectTo,
                     toParagraphs: [targetText],
-                    raw: streamData.rawData,
                   },
                 });
               }
