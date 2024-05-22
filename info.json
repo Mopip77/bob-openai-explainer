@@ -42,8 +42,21 @@
                 {
                     "title": "gpt-3.5-turbo",
                     "value": "gpt-3.5-turbo"
+                },
+                {
+                    "title": "gpt-4",
+                    "value": "gpt-4"
                 }
             ]
+        },
+        {
+            "identifier": "specificModel",
+            "type": "text",
+            "title": "指定模型",
+            "textConfig": {
+                "type": "visible",
+                "placeholderText": "留空则使用Model配置的模型"
+            }
         }
     ]
 }

@@ -41,7 +41,7 @@ function translate(query, completion) {
   };
 
   var body = {
-    model: $option.model,
+    model: $option.specificModel || $option.model,
     stream: true,
     messages: [
       {

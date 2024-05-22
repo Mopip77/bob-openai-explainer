@@ -28,3 +28,4 @@
 - [x] 支持插件自动更新 
 - [x] 支持流式输出，参考 <https://github.com/openai-translator/bob-plugin-openai-translator/pull/83>
 - [x] 自定义 endpoint
+- [x] 支持自定义模型
