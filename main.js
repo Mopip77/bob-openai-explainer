@@ -58,6 +58,7 @@ function translate(query, completion) {
     header,
     body,
     streamHandler: function (streamData) {
+      $log.info(`streamData: ${JSON.stringify(streamData)}`)
       const lines = streamData.text.split("\n").filter((line) => line);
       // 遍历分割后的数组，判断是否为 `data: ` 开头，如果是，则进行处理
       lines.forEach((line) => {
@@ -67,6 +68,9 @@ function translate(query, completion) {
           if (dataStr !== "[DONE]") {
             try {
               const dataObj = JSON.parse(dataStr);
+              if (dataObj.choices.length == 0) {
+                return;
+              }
               const content = dataObj.choices[0].delta.content;
               if (content !== undefined) {
                 targetText += content;
@@ -82,7 +86,7 @@ function translate(query, completion) {
               query.onCompletion({
                 error: {
                   type: err._type || "unknown",
-                  message: err._message || "Failed to parse JSON",
+                  message: err._message || `Failed to parse JSON => ${dataStr}`,
                   addtion: err._addition,
                 },
               });
