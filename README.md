@@ -14,7 +14,7 @@
 
 建议 `隐藏并钉到语言切换栏`，按需使用
 
-> <img width="500" src="static/example.gif"></img>
+> <img width="500" src="static/example2.gif"></img>
 
 ## Configuration
 
@@ -29,3 +29,4 @@
 - [x] 支持流式输出，参考 <https://github.com/openai-translator/bob-plugin-openai-translator/pull/83>
 - [x] 自定义 endpoint
 - [x] 支持自定义模型
+- [x] 支持展示额外调用信息(model、token usage)
