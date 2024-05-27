@@ -57,6 +57,22 @@
                 "type": "visible",
                 "placeholderText": "留空则使用Model配置的模型"
             }
+        },
+        {
+            "identifier": "showExtraInfo",
+            "type": "menu",
+            "defaultValue": "false",
+            "title": "展示调用额外信息(模型, token消耗)",
+            "menuValues": [
+                {
+                    "title": "展示",
+                    "value": "true"
+                },
+                {
+                    "title": "不展示",
+                    "value": "false"
+                }
+            ]
         }
     ]
 }

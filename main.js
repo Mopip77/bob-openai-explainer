@@ -13,24 +13,24 @@
 
 function supportLanguages() {
   return [
-      "auto",
-      "zh-Hans",
-      "zh-Hant",
-      "yue",
-      "wyw",
-      "pysx",
-      "en",
-      "ja",
-      "ko",
-      "fr",
-      "de",
-      "es",
-      "it",
-      "ru",
-      "pt",
-      "nl",
-      "pl",
-      "ar"
+    "auto",
+    "zh-Hans",
+    "zh-Hant",
+    "yue",
+    "wyw",
+    "pysx",
+    "en",
+    "ja",
+    "ko",
+    "fr",
+    "de",
+    "es",
+    "it",
+    "ru",
+    "pt",
+    "nl",
+    "pl",
+    "ar",
   ];
 }
 
@@ -43,6 +43,9 @@ function translate(query, completion) {
   var body = {
     model: $option.specificModel || $option.model,
     stream: true,
+    stream_options: {
+      include_usage: true
+    },
     messages: [
       {
         role: "system",
@@ -51,14 +54,15 @@ function translate(query, completion) {
     ],
   };
 
-  let targetText = '';
+  let targetText = "";
   $http.streamRequest({
     method: "POST",
     url: `${$option.endpoint}/chat/completions`,
     header,
     body,
     streamHandler: function (streamData) {
-      $log.info(`streamData: ${JSON.stringify(streamData)}`)
+      let usage;
+      let model;
       const lines = streamData.text.split("\n").filter((line) => line);
       // 遍历分割后的数组，判断是否为 `data: ` 开头，如果是，则进行处理
       lines.forEach((line) => {
@@ -68,11 +72,14 @@ function translate(query, completion) {
           if (dataStr !== "[DONE]") {
             try {
               const dataObj = JSON.parse(dataStr);
+              $log.info(`single dataObj: ${dataStr}`);
+              usage = dataObj.usage || usage
+              model = dataObj.model
               if (dataObj.choices.length == 0) {
                 return;
               }
               const content = dataObj.choices[0].delta.content;
-              if (content !== undefined) {
+              if (content) {
                 targetText += content;
                 query.onStream({
                   result: {
@@ -97,6 +104,21 @@ function translate(query, completion) {
                 from: query.detectFrom,
                 to: query.detectTo,
                 toParagraphs: [targetText],
+                toDict:
+                  $option.showExtraInfo === "true"
+                    ? {
+                        parts: [
+                          {
+                            part: "model.",
+                            means: [model],
+                          },
+                          {
+                            part: "tokens.",
+                            means: [`I:${usage.prompt_tokens}`, `O: ${usage.completion_tokens}`, `T: ${usage.total_tokens}`],
+                          },
+                        ],
+                      }
+                    : {},
               },
             });
           }
