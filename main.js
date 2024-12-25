@@ -44,7 +44,7 @@ function translate(query, completion) {
     model: $option.specificModel || $option.model,
     stream: true,
     stream_options: {
-      include_usage: true
+      include_usage: true,
     },
     messages: [
       {
@@ -55,75 +55,88 @@ function translate(query, completion) {
   };
 
   let targetText = "";
+  let model = "";
+  let usage = {};
+  let streamBuffer = "";
+  function handleStreamData(streamText, query) {
+    $log.info(`[handleStreamData] received streamText => ${streamText}`);
+    if (streamText.startsWith("data: ")) {
+      streamText = streamText.slice(6);
+    }
+
+    if (streamText === "[DONE]") {
+      query.onCompletion({
+        result: {
+          from: query.detectFrom,
+          to: query.detectTo,
+          toParagraphs: [targetText],
+          toDict:
+            $option.showExtraInfo === "true"
+              ? {
+                  parts: [
+                    {
+                      part: "model.",
+                      means: [model],
+                    },
+                    {
+                      part: "tokens.",
+                      means: [
+                        `I:${usage.prompt_tokens}`,
+                        `O: ${usage.completion_tokens}`,
+                        `T: ${usage.total_tokens}`,
+                      ],
+                    },
+                  ],
+                }
+              : {},
+        },
+      });
+      return;
+    }
+
+    streamBuffer += streamText;
+
+    let dataObj;
+    try {
+      dataObj = JSON.parse(streamBuffer.trim());
+    } catch (err) {
+      $log.info(`[handleStreamData] json not assembled, streamBuffer => ${streamBuffer}`);
+      return;
+    }
+
+    usage = dataObj.usage || usage;
+    model = dataObj.model;
+    if (dataObj.choices.length == 0) {
+      return;
+    }
+    const content = dataObj.choices[0].delta.content;
+    if (content) {
+      targetText += content;
+    }
+
+    query.onStream({
+      result: {
+        from: query.detectFrom,
+        to: query.detectTo,
+        toParagraphs: [targetText],
+      },
+    });
+
+    streamBuffer = "";
+  }
+
   $http.streamRequest({
     method: "POST",
     url: `${$option.endpoint}/chat/completions`,
     header,
     body,
     streamHandler: function (streamData) {
-      let usage;
-      let model;
-      const lines = streamData.text.split("\n").filter((line) => line);
-      // 遍历分割后的数组，判断是否为 `data: ` 开头，如果是，则进行处理
-      lines.forEach((line) => {
-        const match = line.match(/^data: (.*)/);
-        if (match) {
-          const dataStr = match[1].trim();
-          if (dataStr !== "[DONE]") {
-            try {
-              const dataObj = JSON.parse(dataStr);
-              $log.info(`single dataObj: ${dataStr}`);
-              usage = dataObj.usage || usage
-              model = dataObj.model
-              if (dataObj.choices.length == 0) {
-                return;
-              }
-              const content = dataObj.choices[0].delta.content;
-              if (content) {
-                targetText += content;
-                query.onStream({
-                  result: {
-                    from: query.detectFrom,
-                    to: query.detectTo,
-                    toParagraphs: [targetText],
-                  },
-                });
-              }
-            } catch (err) {
-              query.onCompletion({
-                error: {
-                  type: err._type || "unknown",
-                  message: err._message || `Failed to parse JSON => ${dataStr}`,
-                  addtion: err._addition,
-                },
-              });
-            }
-          } else {
-            query.onCompletion({
-              result: {
-                from: query.detectFrom,
-                to: query.detectTo,
-                toParagraphs: [targetText],
-                toDict:
-                  $option.showExtraInfo === "true"
-                    ? {
-                        parts: [
-                          {
-                            part: "model.",
-                            means: [model],
-                          },
-                          {
-                            part: "tokens.",
-                            means: [`I:${usage.prompt_tokens}`, `O: ${usage.completion_tokens}`, `T: ${usage.total_tokens}`],
-                          },
-                        ],
-                      }
-                    : {},
-              },
-            });
-          }
-        }
-      });
+      streamData.text
+        .split("\n")
+        .filter((line) => line)
+        .forEach((line) => {
+          handleStreamData(line, query);
+        });
     },
   });
 }
